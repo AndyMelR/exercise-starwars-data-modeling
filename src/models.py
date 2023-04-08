@@ -74,28 +74,70 @@ class Creatures(Base):
     name = Column(String(250), nullable=False)
     description = Column(String(500))
     dimensions = Column(Float)
-    gender_id = Column(Integer, ForeignKey('gender.id'))
-    gender = relationship(Gender)
 
-class Favorites(Base):
-    __tablename__ = 'favorites'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
+class Vehicles(Base):
+    __tablename__='vehicles'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
-    films_id = Column(Integer, ForeignKey('films.id'))
-    films = relationship(Films)
-    planet_id = Column(Integer, ForeignKey('planet.id'))
-    planet = relationship(Planet)
-    characters_id = Column(Integer, ForeignKey('characters.id'))
-    characters= relationship(Characters)
-    creature_id = Column(Integer, ForeignKey('creatures.id'))
-    creatures = relationship(Creatures)
+    name = Column(String(250), nullable=False)
+    description = Column(String(500))
+    dimensions = Column(Float)
+    affiliation_id = Column(Integer, ForeignKey('affiliation.id'))
+    character_affiliation = relationship(Affiliation)
+
+class Droids(Base):
+    __tablename__='droids'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    description = Column(String(500))
+
+class Weapons(Base):
+    __tablename__='weapons'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    description = Column(String(500))
+
+class FavoriteCharacter(Base):
+    __tablename__ = 'favorite_characters'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    film_id = Column(Integer, ForeignKey('films.id'), primary_key=True)
+
+class FavoritePlanet(Base):
+    __tablename__='favorite_planets'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    planet_id = Column(Integer, ForeignKey('planet.id'), primary_key=True)
+    
+
+class FavoriteFilm(Base):
+    __tablename__ = 'favorite_films'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    film_id = Column(Integer, ForeignKey('films.id'), primary_key=True)
+
+class FavoriteCreatures(Base):
+    __tablename__ = 'favorite_creatures'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    creature_id = Column(Integer, ForeignKey('creatures.id'), primary_key=True)
+
+class FavoriteVehicles(Base):
+    __tablename__ = 'favorite_vehicles'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    vehicle_id = Column(Integer, ForeignKey('vehicles.id'), primary_key=True)
+
+class FavoriteDroids(Base):
+    __tablename__ = 'favorite_droids'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    droids_id = Column(Integer, ForeignKey('droids.id'), primary_key=True)
+
+class FavoriteWeapons(Base):
+    __tablename__ = 'favorite_weapons'
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    weapons_id = Column(Integer, ForeignKey('weapons.id'), primary_key=True)
 
 
-    def to_dict(self):
-        return {}
+   
+
+
+def to_dict(self):
+    return {}
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
